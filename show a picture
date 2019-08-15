@@ -1,0 +1,7 @@
+import cv2 as cv
+import numpy as np
+
+img = cv.imread('caoping.png')
+cv.imshow('caoping', img)
+cv.waitKey(10000) #等待时间
+cv.destroyAllWindows() #释放由opencv()创建的所有窗口
