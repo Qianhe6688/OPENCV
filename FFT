@@ -1,3 +1,4 @@
+//频域变换
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -21,3 +22,78 @@ plt.imshow(s1, 'gray')
 plt.title('center')
 
 plt.show()
+
+//时域变换-高通滤波器
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+kernel_9 = np.array([[-1, -1, -1],
+                     [-1, 8, -1],
+                     [-1, -1, -1]])
+
+kernel_25 = np.array([[-1, -1, -1, -1, -1],
+                      [-1, 1, 2, 1, -1],
+                      [-1, 2, 4, 2, -1],
+                      [-1, 1, 2, 1, -1],
+                      [-1, -1, -1, -1, -1]])
+
+img = cv2.imread('test.jpg')
+ndimg = np.array(img)
+print(ndimg)
+
+k3 = cv2.filter2D(ndimg, -1, kernel_9)      #convolve calculate 
+k5 = cv2.filter2D(ndimg, -1, kernel_25)     #the second parameters measns the deepth of passageway.
+#such as cv2.CV_8U means every passageway is 8 bit.
+#-1 means the passageway of the source file and the object file is equal.
+plt.subplot(131)
+plt.imshow(img)
+plt.title("source image")
+
+plt.subplot(132)
+plt.imshow(k3)
+plt.title("kernel = 3")
+
+plt.subplot(133)
+plt.imshow(k5)
+plt.title("kernel = 5")
+
+plt.show()
+
+
+//时域变换-低通滤波器
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+kernel_25h = np.array([[-1, -1, -1, -1, -1],
+                      [-1, 1, 2, 1, -1],
+                      [-1, 2, 4, 2, -1],
+                      [-1, 1, 2, 1, -1],
+                      [-1, -1, -1, -1, -1]])
+
+kernel_25l = np.array([[0.04, 0.04, 0.04, 0.04, 0.04],
+                      [0.04, 0.04, 0.04, 0.04, 0.04],
+                      [0.04, 0.04, 0.04, 0.04, 0.04],
+                      [0.04, 0.04, 0.04, 0.04, 0.04],
+                      [0.04, 0.04, 0.04, 0.04, 0.04]])
+
+img = cv2.imread('test.jpg')
+ndimg = np.array(img)
+
+k3 = cv2.filter2D(ndimg, -1, kernel_25h)
+k5 = cv2.filter2D(ndimg, -1, kernel_25l)
+
+plt.subplot(131)
+plt.imshow(img)
+plt.title("source image")
+
+plt.subplot(132)
+plt.imshow(k3)
+plt.title("kernel3hpf")
+
+plt.subplot(133)
+plt.imshow(k5)
+plt.title("kernel5lpf")
+plt.show()
+
